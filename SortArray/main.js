@@ -29,8 +29,6 @@ function setValues(){
 	if(valid){
 		groupNumber(arrNumbers);
 	}
-
-	//document.getElementById("result").innerHTML = result;
 }
 
 function groupNumber(arrNumbers){
@@ -54,7 +52,6 @@ function groupNumber(arrNumbers){
 function getMax(distinctNumbers, arrRecurrent){
     var auxMax;
 
-    // Algoritmo de burbuja
 	for(var i = 1; i < arrRecurrent.length; i++){
 		for(var j = 0; j < (arrRecurrent.length - i); j++){
 			if(arrRecurrent[j] < arrRecurrent[j + 1]){
@@ -82,15 +79,10 @@ function print(distinctNumbers, arrRecurrent){
 	}
 
 	for(var i = 0; i < output.length; i++){
-		if(i > 0){
-			result += ", " + output[i];
-		} else {
-			result += output[i];
-		}
+		result += i > 0 ? ", " + output[i] : output[i];
 	}
 
 	document.getElementById("result").innerHTML = result;
-	console.log(output);
 }
 
 //let Numbers = {};
