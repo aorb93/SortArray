@@ -27,53 +27,16 @@ function setValues(){
 	}
 
 	if(valid){
-		result = recurrent(arrNumbers);
+		groupNumber(arrNumbers);
 	}
 
-	document.getElementById("result").innerHTML = result;
-}
-
-function recurrent(arrNumbers){
-	// arrNumbers = arrNumbers.sort();
-	var copyArrNumbers = arrNumbers;
-	var elementosUnicos = [];
-	var vecesRepetidos = [];
-	var contador = 0;
-	groupNumber(arrNumbers);
-
-	// for(var i = 0; i < arrNumbers.length; i++){
-	//     if(arrNumbers[i+1] === arrNumbers[i]){
-	//         contador++;
-	//     }else{
-	//         elementosUnicos.push(arrNumbers[i]);
-	//         vecesRepetidos.push(contador);
-	//         contador = 1;
-	//     }
-	// }
-
-	// console.log(elementosUnicos);
-	// console.log(vecesRepetidos);
-
-	// var sortArrNumbers = arrNumbers.sort();
-	// var distinctNumbers = arrNumbers.filter((v, i, a) => a.indexOf(v) === i);
-	// var quantityNumbers = [];
-	// var number = 0;
-	// console.log(sortArrNumbers);
-	// for(var i = 0; i < arrNumbers.lenght; i++){
-	//     number = arrNumbers[i];
-
-	// }
+	//document.getElementById("result").innerHTML = result;
 }
 
 function groupNumber(arrNumbers){
-	var arrAux = [];
-	var currentNumber;
 	var count = 0;
-	var arrLength = arrNumbers.length;
 	var distinctNumbers = arrNumbers.filter((v, i, a) => a.indexOf(v) === i);
 	var arrRecurrent = [];
-	console.log(arrNumbers);
-	console.log(distinctNumbers);
 
 	for(var i = 0; i < distinctNumbers.length; i++){
 		for(var j = 0; j < arrNumbers.length; j++){
@@ -85,38 +48,52 @@ function groupNumber(arrNumbers){
 		count = 0;
 	}
 
-	console.log(arrRecurrent);
+	getMax(distinctNumbers, arrRecurrent);
+}
 
-	for(var i = 0; i < arrLength; i++){
-		currentNumber = arrNumbers[i];
-		arrAux.push(arrNumbers[i]);
+function getMax(distinctNumbers, arrRecurrent){
+    var auxMax;
 
-		for(var j = 0; j < arrLength; j++){
-			if(i != j){
-				if(currentNumber == arrNumbers[j]){
-					arrAux.push(arrNumbers[j]);
-					arrNumbers = removeUsedNumer(arrNumbers, i, j);
-					arrLength = arrNumbers.length;
-					j = arrLength; i = -1;
-				}
+    // Algoritmo de burbuja
+	for(var i = 1; i < arrRecurrent.length; i++){
+		for(var j = 0; j < (arrRecurrent.length - i); j++){
+			if(arrRecurrent[j] < arrRecurrent[j + 1]){
+				auxMax = arrRecurrent[j];
+				arrRecurrent[j] = arrRecurrent[j + 1];
+				arrRecurrent[j + 1] = auxMax;
+
+				auxMax = distinctNumbers[j];
+				distinctNumbers[j] = distinctNumbers[j + 1];
+				distinctNumbers[j + 1] = auxMax;
 			}
 		}
 	}
-	return arrAux;
+
+	print(distinctNumbers, arrRecurrent)
 }
 
-function removeUsedNumer(arrOriginal, param1, param2){
-	var arrAux = [];
-	
-	for(var i = 0; i < arrOriginal.length; i++){
-		if(i != param1){
-			if(i != param2){
-				arrAux.push(arrOriginal[i])
-			}
+function print(distinctNumbers, arrRecurrent){
+	var output = [];
+	var result = "Output: ";
+	for(var i = 0; i < arrRecurrent.length; i++){
+		for(var j = 0; j < arrRecurrent[i]; j++){
+			output.push(distinctNumbers[i]);
 		}
 	}
-	return arrAux;
+
+	for(var i = 0; i < output.length; i++){
+		if(i > 0){
+			result += ", " + output[i];
+		} else {
+			result += output[i];
+		}
+	}
+
+	document.getElementById("result").innerHTML = result;
+	console.log(output);
 }
+
+//let Numbers = {};
 
 // Sort elements by frequency
 
